@@ -10,6 +10,10 @@ defmodule GraphqlRbacExampleWeb.Router do
     plug :put_secure_browser_headers
   end
 
+  pipeline :fake_user do
+    plug GraphqlRbacExample.Plugs.FakeUser
+  end
+
   pipeline :api do
     plug :accepts, ["json"]
   end
@@ -18,6 +22,16 @@ defmodule GraphqlRbacExampleWeb.Router do
     pipe_through :browser
 
     live "/", PageLive, :index
+  end
+
+  scope "/" do
+    pipe_through :fake_user
+    forward "/gql", Absinthe.Plug, schema: GraphqlRbacExample.Schema
+
+    forward "/playground",
+            Absinthe.Plug.GraphiQL,
+            schema: GraphqlRbacExample.Schema,
+            interface: :playground
   end
 
   # Other scopes may use custom stacks.

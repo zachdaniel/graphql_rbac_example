@@ -34,7 +34,7 @@ defmodule GraphqlRbacExample.MixProject do
   defp deps do
     [
       {:ash, "~> 1.24"},
-      {:ash_graphql, "~> 0.7.0"},
+      {:ash_graphql, "~> 0.7.5"},
       {:ash_policy_authorizer, "~> 0.14.0"},
       {:phoenix, "~> 1.5.7"},
       {:phoenix_ecto, "~> 4.1"},
